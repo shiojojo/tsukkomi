@@ -1,103 +1,121 @@
-import Image from "next/image";
+'use client';
+import { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 
-export default function Home() {
+export default function OgiriPage() {
+  // 複数お題データ
+  const topics = [
+    {
+      topic: 'このアプリに最初につけるボケてみたい名前は？',
+      answers: [
+        { id: 1, text: 'ボケクラウド' },
+        { id: 2, text: '突っ込み待ち.com' },
+        { id: 3, text: '大喜利ンピック' },
+        { id: 4, text: 'ツッコミバース' },
+        { id: 5, text: 'ギャグノート' },
+      ],
+    },
+    {
+      topic: '「冷蔵庫にWi-Fiがついてる！」に一言',
+      answers: [
+        { id: 1, text: '冷蔵庫でZoom会議できるね' },
+        { id: 2, text: '冷やし中のネットサーフィン' },
+        { id: 3, text: '冷蔵庫の中からSNS投稿' },
+        { id: 4, text: '冷蔵庫がバズる時代' },
+        { id: 5, text: '冷蔵庫でYouTube見放題' },
+      ],
+    },
+    {
+      topic: '「自販機でカレーが売ってる！」に一言',
+      answers: [
+        { id: 1, text: '温めますか？' },
+        { id: 2, text: 'ルーだけ出てきた' },
+        { id: 3, text: 'ご飯は別売り' },
+        { id: 4, text: '自販機の中がカレー臭' },
+        { id: 5, text: 'カレーの自販機限定味' },
+      ],
+    },
+    // 追加でさらにお題を増やせます
+  ];
+
+  const [currentTopicIdx, setCurrentTopicIdx] = useState(0);
+  // 各お題ごとにratingsを持つ
+  const [ratings, setRatings] = useState<{
+    [topicIdx: number]: { [answerId: number]: number };
+  }>({});
+
+  const handleRate = (answerId: number, stars: number) => {
+    setRatings(prev => ({
+      ...prev,
+      [currentTopicIdx]: {
+        ...(prev[currentTopicIdx] || {}),
+        [answerId]: stars,
+      },
+    }));
+  };
+
+  // スワイプハンドラ
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => {
+      if (currentTopicIdx < topics.length - 1) setCurrentTopicIdx(i => i + 1);
+    },
+    onSwipedRight: () => {
+      if (currentTopicIdx > 0) setCurrentTopicIdx(i => i - 1);
+    },
+    trackMouse: true, // PCでも動作
+  });
+
+  const current = topics[currentTopicIdx];
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center px-2 sm:px-6 pb-4 text-gray-900">
+      {/* お題（スワイプ切り替え） */}
+      <div
+        {...swipeHandlers}
+        className="bg-white shadow-lg rounded-2xl p-3 sm:p-4 mb-4 w-full max-w-md sticky top-0 z-10 select-none cursor-pointer transition-transform duration-200"
+        style={{ touchAction: 'pan-y' }}
+      >
+        <h1 className="text-lg sm:text-xl font-bold text-center break-words text-gray-800">
+          {current.topic}
+        </h1>
+        <div className="flex justify-between mt-2 text-xs text-gray-400">
+          <span>{currentTopicIdx > 0 ? '← スワイプ' : ''}</span>
+          <span>{currentTopicIdx < topics.length - 1 ? 'スワイプ →' : ''}</span>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      {/* 回答リスト */}
+      <div className="w-full max-w-md space-y-3">
+        {current.answers.map(answer => (
+          <div
+            key={answer.id}
+            className="bg-white rounded-2xl shadow p-3 sm:p-4 flex flex-col"
+          >
+            <p className="mb-2 text-base sm:text-lg break-words text-gray-900">
+              {answer.text}
+            </p>
+            <div className="flex space-x-1">
+              {[1, 2, 3].map(star => (
+                <button
+                  key={star}
+                  onClick={() => handleRate(answer.id, star)}
+                  className={
+                    'text-yellow-400 text-xl sm:text-2xl focus:outline-none active:scale-90 transition-transform' +
+                    ((ratings[currentTopicIdx]?.[answer.id] || 0) >= star
+                      ? ''
+                      : ' opacity-60')
+                  }
+                  style={{ touchAction: 'manipulation' }}
+                  aria-label={`星${star}つ`}
+                >
+                  {(ratings[currentTopicIdx]?.[answer.id] || 0) >= star
+                    ? '★'
+                    : '☆'}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
