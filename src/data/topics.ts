@@ -1,7 +1,35 @@
 export type Answer = { id: number; text: string };
-export type Topic = { topic: string; answers: Answer[] };
+export type Topic = { topic: string; answers: Answer[]; imageUrl?: string; image?: string };
 
 export const topics: Topic[] = [
+  // 写真で一言パターン
+  {
+    topic: '写真で一言',
+  // use Drive web-view URL (uc?export=view&id=...) instead of download URL
+  imageUrl: 'https://drive.google.com/uc?export=view&id={id}',
+    answers: [
+      { id: 1, text: '「これが噂の新種か…」' },
+      { id: 2, text: '「お前、誰だ？」' },
+      { id: 3, text: '「今夜はカレーだな」' },
+      { id: 4, text: '「絶対に動くなよ！」' },
+      { id: 5, text: '「写真撮ってる場合じゃない！」' },
+      { id: 6, text: '「これが伝説の一枚」' },
+      { id: 7, text: '「SNS映え間違いなし」' },
+      { id: 8, text: '「まさかの展開」' },
+      { id: 9, text: '「これが日常」' },
+      { id: 10, text: '「説明できない光景」' },
+      { id: 11, text: '「まるで映画のワンシーン」' },
+      { id: 12, text: '「これが現実」' },
+      { id: 13, text: '「新しいペットです」' },
+      { id: 14, text: '「これが噂のAIか」' },
+      { id: 15, text: '「絶対に真似しないでください」' },
+      { id: 16, text: '「これが未来の姿」' },
+      { id: 17, text: '「まさかの遭遇」' },
+      { id: 18, text: '「これが噂の○○」' },
+      { id: 19, text: '「今、何時？」' },
+      { id: 20, text: '「これが伝説の始まり」' },
+    ],
+  },
   {
     topic: 'このアプリに最初につけるボケてみたい名前は？',
     answers: [

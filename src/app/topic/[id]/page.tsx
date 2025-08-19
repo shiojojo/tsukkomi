@@ -1,14 +1,16 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { useSwipeable } from 'react-swipeable';
 import { topics, Topic } from '../../../data/topics';
+import Image from 'next/image';
 
-type Props = { params: { id: string } };
-
-export default function TopicPage({ params }: Props) {
+export default function TopicPage() {
   const router = useRouter();
-  const idx = parseInt(params.id, 10);
+  const params = useParams();
+  const rawId = params?.id;
+  const idStr = Array.isArray(rawId) ? rawId[0] : rawId;
+  const idx = idStr ? parseInt(idStr, 10) : NaN;
   const topic: Topic | undefined = topics[idx];
   const [ratings, setRatings] = useState<{ [answerId: number]: number }>({});
 
@@ -54,9 +56,25 @@ export default function TopicPage({ params }: Props) {
         className="bg-white shadow-lg rounded-2xl p-3 sm:p-4 mb-4 w-full max-w-md sticky top-0 z-10 select-none transition-transform duration-200"
         style={{ touchAction: 'pan-y' }}
       >
-        <h1 className="text-lg sm:text-xl font-bold text-center break-words text-gray-800">
-          {topic.topic}
-        </h1>
+        {topic.imageUrl ? (
+          <div className="mb-2 flex justify-center w-full">
+            <div className="w-full max-w-md rounded-xl overflow-hidden border border-gray-200 relative">
+              <div className="relative w-full" style={{ paddingBottom: '56%' }}>
+                <Image
+                  src={topic.imageUrl}
+                  alt="写真"
+                  fill
+                  style={{ objectFit: 'contain' }}
+                  sizes="(max-width: 640px) 100vw, 400px"
+                />
+              </div>
+            </div>
+          </div>
+        ) : (
+          <h1 className="text-lg sm:text-xl font-bold text-center break-words text-gray-800">
+            {topic.topic}
+          </h1>
+        )}
 
         <div className="mt-2 text-center">
           <button
