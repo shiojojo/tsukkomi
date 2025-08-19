@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       'drive.google.com',
       'drive.usercontent.google.com',
       'lh3.googleusercontent.com',
+      'blogger.googleusercontent.com'
     ],
   },
 };

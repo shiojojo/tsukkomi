@@ -6,7 +6,8 @@ export const topics: Topic[] = [
   {
     topic: '写真で一言',
   // use Drive web-view URL (uc?export=view&id=...) instead of download URL
-  imageUrl: 'https://drive.google.com/uc?export=view&id={id}',
+  // imageUrl: 'https://drive.google.com/uc?export=view&id={id}',
+  imageUrl: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieks99OzkiAothfzTz7FbtakQMfXVPQDL6eUDMJfv_2ghB5xB0gUYsA5n-2YUHe5Adevn9YrfUjswiDQneXg1Q0uzEjIu3R9G-DJ7xvxi6nbj-XiNWool1RV3lRjy3-zKFGPySzfgQxHGw/s650/animal_black_sheep_hitsuji.png',
     answers: [
       { id: 1, text: '「これが噂の新種か…」' },
       { id: 2, text: '「お前、誰だ？」' },
