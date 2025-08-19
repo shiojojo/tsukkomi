@@ -13,6 +13,20 @@ export default function TopicPage() {
   const idx = idStr ? parseInt(idStr, 10) : NaN;
   const topic: Topic | undefined = topics[idx];
   const [ratings, setRatings] = useState<{ [answerId: number]: number }>({});
+  const [contextIndices, setContextIndices] = useState<number[] | null>(null);
+
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem('search_context');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed.indices))
+          setContextIndices(parsed.indices as number[]);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
 
   useEffect(() => {
     const raw = localStorage.getItem(`ratings_topic_${idx}`);
@@ -27,10 +41,36 @@ export default function TopicPage() {
     setRatings(prev => ({ ...prev, [answerId]: stars }));
   };
 
-  const goPrev = () => router.push(`/topic/${Math.max(0, idx - 1)}`);
-  const goNext = () =>
-    router.push(`/topic/${Math.min(topics.length - 1, idx + 1)}`);
+  const currentPos = contextIndices ? contextIndices.indexOf(idx) : -1;
+
+  const goPrev = () => {
+    if (contextIndices && currentPos > 0)
+      return router.push(`/topic/${contextIndices[currentPos - 1]}`);
+    return router.push(`/topic/${Math.max(0, idx - 1)}`);
+  };
+
+  const goNext = () => {
+    if (
+      contextIndices &&
+      currentPos >= 0 &&
+      currentPos < contextIndices.length - 1
+    )
+      return router.push(`/topic/${contextIndices[currentPos + 1]}`);
+    return router.push(`/topic/${Math.min(topics.length - 1, idx + 1)}`);
+  };
+
   const goRandom = () => {
+    if (contextIndices && contextIndices.length > 0) {
+      if (contextIndices.length === 1)
+        return router.push(`/topic/${contextIndices[0]}`);
+      let nIdx = idx;
+      while (nIdx === idx) {
+        const pick = Math.floor(Math.random() * contextIndices.length);
+        nIdx = contextIndices[pick];
+      }
+      return router.push(`/topic/${nIdx}`);
+    }
+
     if (topics.length <= 1) return router.push(`/topic/0`);
     let n = idx;
     while (n === idx) n = Math.floor(Math.random() * topics.length);
