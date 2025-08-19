@@ -1,5 +1,5 @@
 export type Answer = { id: number; text: string };
-export type Topic = { topic: string; answers: Answer[]; imageUrl?: string; image?: string };
+export type Topic = { topic: string; answers: Answer[]; imageUrl?: string };
 
 export const topics: Topic[] = [
   // 写真で一言パターン

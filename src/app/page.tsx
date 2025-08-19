@@ -10,7 +10,7 @@ export default function HomePage() {
 
       <div className="w-full max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-3">
         {topics.map((t, i) => {
-          const thumb = t.image || t.imageUrl;
+          const thumb = t.imageUrl;
           return (
             <Link
               key={i}
