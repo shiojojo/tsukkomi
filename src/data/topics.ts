@@ -1,109 +1,17 @@
 export type Answer = { id: number; text: string };
 export type Topic = { topic: string; answers: Answer[]; imageUrl?: string };
 
-export const topics: Topic[] = [
-  // 写真で一言パターン
-  {
-    topic: '写真で一言',
-  // use Drive web-view URL (uc?export=view&id=...) instead of download URL
-  // imageUrl: 'https://drive.google.com/uc?export=view&id={id}',
-  imageUrl: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEieks99OzkiAothfzTz7FbtakQMfXVPQDL6eUDMJfv_2ghB5xB0gUYsA5n-2YUHe5Adevn9YrfUjswiDQneXg1Q0uzEjIu3R9G-DJ7xvxi6nbj-XiNWool1RV3lRjy3-zKFGPySzfgQxHGw/s650/animal_black_sheep_hitsuji.png',
-    answers: [
-      { id: 1, text: '「これが噂の新種か…」' },
-      { id: 2, text: '「お前、誰だ？」' },
-      { id: 3, text: '「今夜はカレーだな」' },
-      { id: 4, text: '「絶対に動くなよ！」' },
-      { id: 5, text: '「写真撮ってる場合じゃない！」' },
-      { id: 6, text: '「これが伝説の一枚」' },
-      { id: 7, text: '「SNS映え間違いなし」' },
-      { id: 8, text: '「まさかの展開」' },
-      { id: 9, text: '「これが日常」' },
-      { id: 10, text: '「説明できない光景」' },
-      { id: 11, text: '「まるで映画のワンシーン」' },
-      { id: 12, text: '「これが現実」' },
-      { id: 13, text: '「新しいペットです」' },
-      { id: 14, text: '「これが噂のAIか」' },
-      { id: 15, text: '「絶対に真似しないでください」' },
-      { id: 16, text: '「これが未来の姿」' },
-      { id: 17, text: '「まさかの遭遇」' },
-      { id: 18, text: '「これが噂の○○」' },
-      { id: 19, text: '「今、何時？」' },
-      { id: 20, text: '「これが伝説の始まり」' },
-    ],
-  },
-  {
-    topic: 'このアプリに最初につけるボケてみたい名前は？',
-    answers: [
-      { id: 1, text: 'ボケクラウド' },
-      { id: 2, text: '突っ込み待ち.com' },
-      { id: 3, text: '大喜利ンピック' },
-      { id: 4, text: 'ツッコミバース' },
-      { id: 5, text: 'ギャグノート' },
-      { id: 6, text: '笑撃アプリ' },
-      { id: 7, text: 'ボケっと広場' },
-      { id: 8, text: 'ツッコミタイム' },
-      { id: 9, text: '漫才メモ' },
-      { id: 10, text: '即レスボケ' },
-      { id: 11, text: 'ネタばこ' },
-      { id: 12, text: 'オモシロファクトリー' },
-      { id: 13, text: '笑いの種' },
-      { id: 14, text: 'ギャグ工房' },
-      { id: 15, text: 'ボケジェネレーター' },
-      { id: 16, text: '突っ込みランド' },
-      { id: 17, text: '一発ギャグ屋' },
-      { id: 18, text: '笑いの泉' },
-      { id: 19, text: 'ネタポケット' },
-      { id: 20, text: 'ツッコミラボ' },
-    ],
-  },
-  {
-    topic: '「冷蔵庫にWi-Fiがついてる！」に一言',
-    answers: [
-      { id: 1, text: '冷蔵庫でZoom会議できるね' },
-      { id: 2, text: '冷やし中のネットサーフィン' },
-      { id: 3, text: '冷蔵庫の中からSNS投稿' },
-      { id: 4, text: '冷蔵庫がバズる時代' },
-      { id: 5, text: '冷蔵庫でYouTube見放題' },
-      { id: 6, text: '冷蔵庫に広告が出てる' },
-      { id: 7, text: '冷凍室はダークモード' },
-      { id: 8, text: '電波で野菜が踊る' },
-      { id: 9, text: '冷蔵庫がリモートワーク' },
-      { id: 10, text: '食材のオンライン会議' },
-      { id: 11, text: 'ネットワークで保存容量UP' },
-      { id: 12, text: '冷蔵庫から通知が来る' },
-      { id: 13, text: '冷蔵庫の中の天気予報' },
-      { id: 14, text: '冷蔵庫がフォローしてくる' },
-      { id: 15, text: '冷蔵庫で配信始めた' },
-      { id: 16, text: '冷蔵庫がSNS映え' },
-      { id: 17, text: '冷蔵庫の中でチャット' },
-      { id: 18, text: '冷蔵庫でオンライン買い物' },
-      { id: 19, text: '冷蔵庫が通信料で怒る' },
-      { id: 20, text: 'Wi‑Fiのために氷を作る' },
-    ],
-  },
-  {
-    topic: '「自販機でカレーが売ってる！」に一言',
-    answers: [
-      { id: 1, text: '温めますか？' },
-      { id: 2, text: 'ルーだけ出てきた' },
-      { id: 3, text: 'ご飯は別売り' },
-      { id: 4, text: '自販機の中がカレー臭' },
-      { id: 5, text: 'カレーの自販機限定味' },
-      { id: 6, text: 'トッピングは選べるの？' },
-      { id: 7, text: '電子レンジ内蔵型かな' },
-      { id: 8, text: 'コインでスパイス調整' },
-      { id: 9, text: '箸はどこに入ってる？' },
-      { id: 10, text: '自販機の隣にナン置いて' },
-      { id: 11, text: '辛さはボタンで選択' },
-      { id: 12, text: 'お代わり不可' },
-      { id: 13, text: '持ち帰り用の容器付き' },
-      { id: 14, text: 'レトルト感満載' },
-      { id: 15, text: 'カレーの自販機限定ポイント' },
-      { id: 16, text: '深夜に売り切れそう' },
-      { id: 17, text: '自販機がカレー専門店になる' },
-      { id: 18, text: '匂いで人が集まる' },
-      { id: 19, text: '地方限定カレーが出る' },
-      { id: 20, text: '自販機にスプーン内蔵' },
-    ],
-  },
-];
+// Generate 100 dummy topics, each with 20 answers. Keep one sample image on the first topic.
+export const topics: Topic[] = Array.from({ length: 100 }, (_, i) => {
+  const idx = i + 1;
+  return {
+    topic: `お題 ${idx} - ダミーの質問`,
+    ...(i === 0
+      ? { imageUrl: 'https://drive.google.com/uc?export=view&id=1QM5tYApmGXt3qZdvsI2-dwS2gmgbINK2' }
+      : {}),
+    answers: Array.from({ length: 20 }, (_, a) => ({
+      id: a + 1,
+      text: `回答 ${a + 1}（お題 ${idx}）`,
+    })),
+  };
+});
